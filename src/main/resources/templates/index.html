@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="#{setting.page.title}">Page Title</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+
+    <link th:href="@{/css/vroom.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
+
+    <link rel="SHORTCUT ICON" href="favicon.ico" type="image/x-icon" />
+    <link rel="ICON" href="favicon.ico" type="image/ico" />
+
+
+</head>
+<body>
+
+<div th:replace="template :: header"></div>
+<div th:replace="template :: navigation"></div>
+
+<h1 class="text-center text-primary mt-3">VROOM Spelling Test</h1>
+
+
+<div th:replace="template :: footer"></div>
+
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}" />
+<script type="text/javascript" th:src="@{/js/popper.js}" ></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}" />
+
+</body>
+
+</html>
