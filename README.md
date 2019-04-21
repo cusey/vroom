@@ -15,7 +15,7 @@ height="100px"/>
 * Datatables
 * MySQL 5.7
 * Bootstrap 4
-* 
+* Jetbrian Intellij
  
 ## Authors
 * John Cusey - CuseyHub  
