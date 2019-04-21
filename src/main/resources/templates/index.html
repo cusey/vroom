@@ -7,10 +7,11 @@
     <link th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen"/>
 
     <link th:href="@{/css/vroom.css}" rel="stylesheet" media="screen"/>
-    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
 
     <link rel="SHORTCUT ICON" href="favicon.ico" type="image/x-icon" />
     <link rel="ICON" href="favicon.ico" type="image/ico" />
+
+    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
 
 
 </head>
@@ -19,14 +20,76 @@
 <div th:replace="template :: header"></div>
 <div th:replace="template :: navigation"></div>
 
-<h1 class="text-center text-primary mt-3">VROOM Spelling Test</h1>
+
+<div class="card text-center m-3">
+    <div class="card-header bg-success">
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Select Spelling Test</h5>
+
+        <div class="container mb-3">
+
+            <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Tests
+                </button>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Link 1</a>
+                    <a class="dropdown-item" href="#">Link 2</a>
+                    <a class="dropdown-item" href="#">Link 3</a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container ">
+
+            <div class="btn-group">
+                <button id="startBtn" class="btn btn-primary" type="button">Start</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card text-center m-3">
+    <div class="card-header bg-success">
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Take Spelling Test</h5>
+
+
+        <div class="container mb-3">
+            <textarea  id="inputWordsTxt" cols="150" rows="4"></textarea>
+        </div>
+
+        <div class="container">
+            <div class="btn-group">
+                <button id="previousBtn" class="btn btn-primary" type="button">Previous</button>
+                <button id="sayBtn" class="btn btn-primary " type="button">Say</button>
+                <button id="checkBtn" class="btn btn-primary" type="button">Check</button>
+                <button id="nextBtn" class="btn btn-primary" type="button">Next</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
 
 
 <div th:replace="template :: footer"></div>
 
-<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}" />
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}" /></script>
 <script type="text/javascript" th:src="@{/js/popper.js}" ></script>
-<script type="text/javascript" th:src="@{/js/bootstrap.min.js}" />
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}" /></script>
+
+<script type="text/javascript" th:src="@{/js/index.js}" ></script>
 
 </body>
 

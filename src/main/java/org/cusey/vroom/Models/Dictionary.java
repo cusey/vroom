@@ -1,18 +1,34 @@
 package org.cusey.vroom.Models;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name="t_dictionary")
 public class Dictionary {
 
-    public String word;
-    public String partOfSpeech;
-    public String definition;
-    public String wordUsage;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    private String word;
+    private String partOfSpeech;
+    private String definition;
+    private String wordUsage;
 
-    public Dictionary(String word, String partOfSpeech, String definition, String wordUsage) {
+    public Dictionary(){}
+
+    public Dictionary(int id, String word, String partOfSpeech, String definition, String wordUsage) {
+        this.id = id;
         this.word = word;
         this.partOfSpeech = partOfSpeech;
         this.definition = definition;
         this.wordUsage = wordUsage;
     }
+
+    public int getId() {return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getWord() { return word; }
     public void setWord(String word) { this.word = word; }
@@ -25,4 +41,16 @@ public class Dictionary {
 
     public String getWordUsage() { return wordUsage; }
     public void setWordUsage(String wordUsage) { this.wordUsage = wordUsage; }
+
+    @Override
+    public String toString() {
+        return "Dictionary{" +
+                "id=" + id +
+                ", word='" + word + '\'' +
+                ", partOfSpeech='" + partOfSpeech + '\'' +
+                ", definition='" + definition + '\'' +
+                ", wordUsage='" + wordUsage + '\'' +
+                '}';
+    }
 }
+
