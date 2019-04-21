@@ -7,7 +7,7 @@ src="https://github.com/cusey/ImageForWiki/blob/master/Logos/SpringProjects.PNG"
 alt="Apache Spark" 
 height="100px"/>  
 
-# Technologies
+## Technologies
 * Spring JPA 2.1.4.RELEASE
 * Spring Boot 2.1.4.RELEASE 
 * Thymeleaf
