@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public class EditController {
 
 
-    //http://localhost:8095/edit
+    //http://localhost:8096/edit
     @RequestMapping("/edit")
     public String showEdit(HttpServletRequest request){
         return "edit";
