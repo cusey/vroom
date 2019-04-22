@@ -5,26 +5,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Comparator;
 
 @Entity(name="t_dictionary")
 public class Dictionary {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int id ;
     private String word;
-    private String partOfSpeech;
+    private String partOfSpeech ;
     private String definition;
-    private String wordUsage;
+    private String wordUsage ;
+    private int totalTryCount;
+    private int rightCount;
 
     public Dictionary(){}
 
-    public Dictionary(int id, String word, String partOfSpeech, String definition, String wordUsage) {
+    public Dictionary(int id,String word, String partOfSpeech, String definition, String wordUsage, int totalTryCount, int rightCount) {
         this.id = id;
         this.word = word;
         this.partOfSpeech = partOfSpeech;
         this.definition = definition;
         this.wordUsage = wordUsage;
+        this.totalTryCount = totalTryCount;
+        this.rightCount = rightCount;
     }
 
     public int getId() {return id; }
@@ -42,6 +47,12 @@ public class Dictionary {
     public String getWordUsage() { return wordUsage; }
     public void setWordUsage(String wordUsage) { this.wordUsage = wordUsage; }
 
+    public int getTotalTryCount() { return totalTryCount; }
+    public void setTotalTryCount(int totalTryCount) { this.totalTryCount = totalTryCount; }
+
+    public int getRightCount() { return rightCount; }
+    public void setRightCount(int rightCount) { this.rightCount = rightCount; }
+
     @Override
     public String toString() {
         return "Dictionary{" +
@@ -50,6 +61,19 @@ public class Dictionary {
                 ", partOfSpeech='" + partOfSpeech + '\'' +
                 ", definition='" + definition + '\'' +
                 ", wordUsage='" + wordUsage + '\'' +
+                ", totalTryCount=" + totalTryCount +
+                ", rightCount=" + rightCount +
                 '}';
     }
+
+    public static Comparator<Dictionary> WordComparator = new Comparator<Dictionary>(){
+
+        public int compare (Dictionary d1, Dictionary d2){
+
+            String word1 = d1.getWord().toUpperCase();
+            String word2 = d2.getWord().toUpperCase();
+
+            return word1.compareTo(word2);
+        }
+    };
 }

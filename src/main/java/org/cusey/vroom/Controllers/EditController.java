@@ -21,7 +21,7 @@ public class EditController {
     private DictionaryService dictionaryService;
 
 
-    //http://localhost:8096/edit
+    //http://localhost:8095/edit
     @RequestMapping(value = "/edit" , method = RequestMethod.GET)
     public String showEdit(HttpServletRequest request){
         slf4jLogger.debug("showEdit");

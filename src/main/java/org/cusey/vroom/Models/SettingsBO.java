@@ -1,13 +1,13 @@
 package org.cusey.vroom.Models;
 
 /**
-* The Setting implements an application that
-* 
-*
-* @author  Cusey,John
-* @version 1.0
-* @since   2018-06-08 
-*/
+ * The Setting implements an application that
+ *
+ *
+ * @author  Cusey,John
+ * @version 1.0
+ * @since   2018-06-08
+ */
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,7 +18,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,90 +31,87 @@ import static org.cusey.vroom.Models.Constants.*;
 
 @Component
 public class SettingsBO {
-	
+
     private final static Logger slf4jLogger = LoggerFactory.getLogger(SettingsBO.class);
-	
+
     private String successMessage = "";
     private String dangerMessage = "";
-	
+
     @Value("C:" + BACKSLASH  + "Vroom")
     private String directory;
     @Value("Input")
     private String folderIn;
     @Value("Output")
     private String folderOut;
-	
+
     private File[] files;
-	
+
     private String currentLine = "";
     private BufferedReader br = null;
-    private FileReader fr = null; 
-    
+    private FileReader fr = null;
+
     private File flatFile;
-	private FileWriter fw = null;
-    
-	
-	public SettingsBO() {
-	}
-	
-	/**
-    * This method reads file in the C:\Vroom\Input folder and stores 
-    * the data in object called Dictionary. Input is the default folder 
-    * name.
-    * @return List<Dictionary> Contains the list of dictionary entry.
-    */
-	public List<Dictionary> populateDictionary(){
-		
-		List<Dictionary> dicList = new ArrayList<Dictionary>();
-		
-		files = new File(directory + BACKSLASH + folderIn).listFiles();
-		
-		String path = directory + BACKSLASH  +  folderIn;
-		
+    private FileWriter fw = null;
+    private BufferedWriter bw = null;
+
+    public SettingsBO() {
+    }
+
+    /**
+     * This method reads file in the C:\Vroom\Input folder and stores
+     * the data in object called Dictionary. Input is the default folder
+     * name.
+     * @return List<Dictionary> Contains the list of dictionary entry.
+     */
+    public List<Dictionary> populateDictionary(){
+
+        List<Dictionary> dicList = new ArrayList<Dictionary>();
+
+        files = new File(directory + BACKSLASH + folderIn).listFiles();
+
+        String path = directory + BACKSLASH  +  folderIn;
+
         try {
-        	
-        	if(files != null ){
 
-	            for(File file : files){
-	
-	                fr = new FileReader(  path + BACKSLASH  + file.getName() );
-	                br = new BufferedReader(fr);
-	
-	                while ((currentLine = br.readLine()) != null) {
-	
-	                    if (currentLine.length() > 0) {
-	                    	slf4jLogger.debug(currentLine);
-	                    	
-	                    	Dictionary dic = new Dictionary();
-	                    	
-	                    	if(currentLine.indexOf(DELIMITER) == -1){
-	                    		dic.setWord(currentLine);
-	                    		
-	                    	}else{
-	                           	String[] items = currentLine.split(BACKSLASH +DELIMITER);
-		                    	
-		                    	if(items.length > 4){
-		                    		dic.setWord(items[1]);
-		                    		dic.setPartOfSpeech(items[2]);
-		                    		dic.setDefinition(items[3]);
-		                    		dic.setWordUsage(items[4]);
-		                    		
-		                    		dicList.add(dic);
-		                    		
-		                    	}
-	                    		
-	                    	}
+            if(files != null ){
 
-	                    }
-	                }
-	            }
-        	}else{
-        		slf4jLogger.debug("Check the file(s) in folder " + path);
+                for(File file : files){
+
+                    fr = new FileReader(  path + BACKSLASH  + file.getName() );
+                    br = new BufferedReader(fr);
+
+                    while ((currentLine = br.readLine()) != null) {
+
+                        if (currentLine.length() > 0) {
+                            slf4jLogger.debug(currentLine);
+
+                            Dictionary dic = new Dictionary();
+
+                                String[] items = currentLine.split(BACKSLASH +DELIMITER);
+
+                                if(items.length > 6){
+                                    dic.setWord(items[1]);
+                                    dic.setPartOfSpeech(items[2]);
+                                    dic.setDefinition(items[3]);
+                                    dic.setWordUsage(items[4]);
+                                    dic.setTotalTryCount( Integer.parseInt(items[5]) );
+                                    dic.setRightCount(Integer.parseInt(items[6]));
+
+                                    dicList.add(dic);
+
+
+                            }
+
+                        }
+                    }
+                }
+            }else{
+                slf4jLogger.debug("Check the file(s) in folder " + path);
             }
-       	 
+
 
         } catch (IOException e) {
-        	slf4jLogger.error(e.getMessage());
+            slf4jLogger.error(e.getMessage());
         } finally {
 
             try {
@@ -124,115 +123,150 @@ public class SettingsBO {
                     fr.close();
 
             } catch (IOException e) {
-            	slf4jLogger.error(e.getMessage());
+                slf4jLogger.error(e.getMessage());
             }
         }
-		
-		return dicList;
-	}
-	
-	/** 
-	*  This method writes Dictionary object to flat file the
-	*  methods uses the first letter of the word as the file 
-	*  name.
-	*  and puts the file in C:\Vroom\Output 
-	* @param dic Is list of Dictionary objects which contains 
-	* the entries. 
-	* @return int Number row added to the file in the 
-	* folder C:\Vroom\Output. Output is the default folder name.
-	*/
-	public int populateFlatFile(List<Dictionary> dic){
-		
-		String lastFirstLetter = " ";
-		int rowCount = 0;
-		
-		try {
-		
-		
-		for( Dictionary element :dic){
-			
-			if(element.getWord() != null){
-				
-				String wordFirstLetter  = element.getWord().substring(0,1);
-				
-			
-					if( ! wordFirstLetter.equals(lastFirstLetter) ){
-						
-						createFile(wordFirstLetter);
-						lastFirstLetter = wordFirstLetter;
-					}
-				
-					String line = DELIMITER + element.getWord() + 
-							      DELIMITER + element.getPartOfSpeech() + 
-							      DELIMITER + element.getDefinition() + 
-							      DELIMITER + element.getWordUsage() +
-							      DELIMITER ;
-					
-					slf4jLogger.debug(line);
-				
-					 fw.write(line + "\n");
-					 rowCount++;
 
-	      }
-	   }
+        return dicList;
+    }
 
-		} catch (IOException e) {
-			slf4jLogger.error( e.getMessage() );
-		}finally{
-			try {
-				fw.flush();
-				
-				if(fw != null){
-				    fw.close();
-				}
-			} catch (IOException e) {
-				slf4jLogger.error( e.getMessage() );
-			}
-			
-			
-		}
+    /**
+     *  This method writes Dictionary object to flat file the
+     *  methods uses the first letter of the word as the file
+     *  name.
+     *  and puts the file in C:\Vroom\Output
+     * @param dic Is list of Dictionary objects which contains
+     * the entries.
+     * @return int Number row added to the file in the
+     * folder C:\Vroom\Output. Output is the default folder name.
+     */
+    public int populateFlatFile(List<Dictionary> dic){
 
-		return rowCount;
-		
-	}
-	
-	private void createFile(String fileName){
-		
-		try {
-		    flatFile = new File(directory + BACKSLASH + folderOut + BACKSLASH + fileName.toUpperCase() + ".txt");
-		    
-		    if (flatFile.createNewFile()){
-		        System.out.println(fileName + ".txt is created!");
-		     }else{
-		        System.out.println("The file " + fileName + ".txt already exists.");
-		     }
-		    
-		    fw =  new FileWriter(flatFile);
-		    
-		    
-		} catch (IOException e) {
-			slf4jLogger.error(e.getMessage());
-	    }
-		
-	}
-	
-	
-	public String getSuccessMessage() {return successMessage;}
-	public void setSuccessMessage(String successMessage) {this.successMessage = successMessage;}
+        Collections.sort(dic,Dictionary.WordComparator);
 
-	public String getDangerMessage() {return dangerMessage;}
-	public void setDangerMessage(String dangerMessage) {this.dangerMessage = dangerMessage;}
+        int totalRowCount = 0;
+        String fileName = "";
 
-	public String getDirectory() {return directory;}
-	public void setDirectory(String directory) {this.directory = directory;}
+        if ( (dic.size() > 0) ){
+                for( int index = 0; index < dic.size(); index++){
 
-	public String getFolderOut() { return folderOut; }
-	public void setFolderOut(String folderOut) { this.folderOut = folderOut; }
+                    Dictionary entry = dic.get(index);
+                    Dictionary entryNext = new Dictionary( -1," ", " ", " ", " ",0,0);
 
-	public String getFolderIn() { return folderIn; }
-	public void setFolderIn(String folderIn) { this.folderIn = folderIn; }
+                    if(index < dic.size() -1){
+                        entryNext = dic.get(index +1);
+                    }
 
-	public File[] getFiles() {return files;}
-	public void setFiles(File[] files) {this.files = files;}
-	
+                    if( index == 0){
+                        createFile(entry);
+                    }
+
+                    slf4jLogger.debug( "[" + index + " ] " + getLine(entry) );
+
+                    writeLine(entry);
+
+                    boolean newLine = false;
+
+
+                    if(! getFirstLetterWord ( entryNext ).equals( " ")) {
+                        newLine = !(getFirstLetterWord(entry).equalsIgnoreCase(getFirstLetterWord(entryNext)));
+                    }
+
+                    slf4jLogger.debug("Close file writer and create new file? " + (newLine == true ? "Yes" : "No" )  );
+                    slf4jLogger.debug("Entry Word: " + entry.getWord() +" New Entry Word: " + entryNext.getWord() );
+
+                    if(newLine){
+                        close();
+                        if(entryNext.getId() != -1){
+                            createFile(entryNext);
+                        }else{
+                            slf4jLogger.error("Next dictionary entry initialize error");
+                        }
+
+                    }
+
+                    totalRowCount++;
+
+                }
+                close();
+        }
+
+        return totalRowCount;
+
+    }
+
+
+    private void writeLine(Dictionary entry){
+        try {
+            bw.write(getLine(entry));
+            bw.newLine();
+        } catch (IOException e) {
+            slf4jLogger.error(e.getMessage());
+        }
+    }
+
+    private String getLine(Dictionary entry){
+
+        return DELIMITER + entry.getWord() + DELIMITER + entry.getPartOfSpeech() + DELIMITER + entry.getDefinition() + DELIMITER + entry.getWordUsage() + DELIMITER  ;
+    }
+
+    private String getFirstLetterWord(Dictionary entry){
+
+        return entry != null ? entry.getWord().substring(0,1).toUpperCase() : " ";
+    }
+
+    private void createFile(Dictionary entry ){
+
+        String fileName = getFirstLetterWord(entry);
+
+
+        try {
+
+            flatFile = new File(directory + BACKSLASH + folderOut + BACKSLASH + fileName.toUpperCase() + ".txt");
+
+            if (flatFile.createNewFile()){
+                slf4jLogger.debug(fileName + ".txt is created!");
+            }else{
+                slf4jLogger.debug("The file " + fileName + ".txt already exists.");
+            }
+
+            bw = new BufferedWriter(new FileWriter(flatFile));
+
+
+        } catch (IOException e) {
+            slf4jLogger.error(e.getMessage());
+        }
+
+    }
+
+    private void close(){
+
+            try {
+                if(bw != null) {
+                    bw.close();
+                }
+            } catch (IOException e) {
+                slf4jLogger.error(e.getMessage());
+            }
+    }
+
+
+    public String getSuccessMessage() {return successMessage;}
+    public void setSuccessMessage(String successMessage) {this.successMessage = successMessage;}
+
+    public String getDangerMessage() {return dangerMessage;}
+    public void setDangerMessage(String dangerMessage) {this.dangerMessage = dangerMessage;}
+
+    public String getDirectory() {return directory;}
+    public void setDirectory(String directory) {this.directory = directory;}
+
+    public String getFolderOut() { return folderOut; }
+    public void setFolderOut(String folderOut) { this.folderOut = folderOut; }
+
+    public String getFolderIn() { return folderIn; }
+    public void setFolderIn(String folderIn) { this.folderIn = folderIn; }
+
+    public File[] getFiles() {return files;}
+    public void setFiles(File[] files) {this.files = files;}
+
 }

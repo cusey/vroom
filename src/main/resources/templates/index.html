@@ -21,38 +21,16 @@
 <div th:replace="template :: navigation"></div>
 
 <div class="container">
-    <h1 class="page-title" >Test</h1>
+    <h1 class="page-title" >Take the Spelling Test</h1>
     <hr>
     <br>
 
-    <div id="select-test" >
-
-        <h4>Select Spelling Test</h4>
-        <div class="Box">
-
-            <li class="Box-row py-0">
-                <label for="first-letter"><b>First Letters of the Word</b></label>
-                <input type="text" id="first-letter" class="form-control" ></input>
-            </li>
-
-            <li class="Box-row py-0">
-                <div class="py-3">
-                    <button id="startBtn" class="btn btn-primary" type="button">Start</button>
+        <div>
+                <div>
+                    <textarea  id="inputWordsTxt" cols="150" rows="2"></textarea>
                 </div>
-            </li>
-
-        </div>
-    </div>
-
-
-    <div id="take-test" >
-        <h4>Take Spelling Test</h4>
-        <div class="Box">
-            <li class="Box-row py-0">
-                <div class="mb-3" >
-                    <textarea  id="inputWordsTxt" cols="150" rows="4"></textarea>
-                </div>
-
+                 <br>
+                 <br>
                 <div>
                     <div class="btn-group">
                         <button id="previousBtn" class="btn btn-primary" type="button">Previous</button>
@@ -61,13 +39,11 @@
                         <button id="nextBtn" class="btn btn-primary" type="button">Next</button>
                     </div>
                 </div>
-            </li>
-
-            <li class="Box-row py-0">
-                <div class="py-3" >
+                <br>
+                <br>
+                <div>
                     <button id="doneBtn" class="btn btn-primary" type="button">Done</button>
                 </div>
-            </li>
 
         </div>
 

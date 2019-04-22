@@ -16,7 +16,7 @@ public class IndexController {
     private final static Logger slf4jLogger = LoggerFactory.getLogger(IndexController.class);
 
 
-    //http://localhost:8096/
+    //http://localhost:8095/
     @RequestMapping("/")
     public String showIndex(HttpServletRequest request){
 
