@@ -28,10 +28,12 @@ $(document).ready(function() {
     };
 
     $('#show-block').hide();
+    $('.check-answer').hide();
 
     $( "#previousBtn" ).click(function() {
 
         $('#show-block').hide();
+        $('.check-answer').hide();
 
         if(row_counter == 0){
             row_counter = rowLength -1;
@@ -51,7 +53,16 @@ $(document).ready(function() {
     });
 
     $( "#checkBtn" ).click(function() {
-        alert( "Handler for .click() called." );
+        var user_answer = $('#answer').val();
+
+        if( user_answer == dic[row_counter][1] ){
+            $('#correct').show();
+            $('#incorrect').hide();
+        }else{
+            $('#incorrect').show();
+            $('#correct').hide();
+        }
+
     });
 
 
@@ -70,6 +81,7 @@ $(document).ready(function() {
     $( "#nextBtn" ).click(function() {
 
         $('#show-block').hide();
+        $('.check-answer').hide();
 
         if(row_counter == rowLength -1){
             row_counter = 0;
