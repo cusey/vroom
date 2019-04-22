@@ -17,6 +17,16 @@ $(document).ready(function() {
 
     }
 
+    $('#diplayWordTotal').text("( " + row_counter +" / " + (rowLength -1) + " )");
+
+    var changeProgressStatus = function(progressCount, progressTotalWordCount){
+        var progress = progressCount/ progressTotalWordCount;
+        var progressBarLength = 346 * (progress);
+        $('#goosander-progress').css('width', progressBarLength +'px');
+        $('#goosander-progress').html(Math.ceil(progress*100) + '%');
+        $('#diplayWordTotal').text("( " + progressCount +" / " + (rowLength -1) + " )");
+    };
+
     $( "#previousBtn" ).click(function() {
         if(row_counter == 0){
             row_counter = rowLength -1;
@@ -37,6 +47,11 @@ $(document).ready(function() {
 
     $( "#checkBtn" ).click(function() {
         alert( "Handler for .click() called." );
+    });
+
+
+    $( "#showBtn" ).click(function() {
+        changeProgressStatus(row_counter,rowLength-1)
     });
 
     $( "#nextBtn" ).click(function() {
