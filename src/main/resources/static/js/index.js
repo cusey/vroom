@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     var dic = [];
+    var row_counter = 0;
 
     var table = document.getElementById('dictionary-entries');
 
@@ -15,5 +16,28 @@ $(document).ready(function() {
         }
 
     }
+
+    $( "#previousBtn" ).click(function() {
+        alert( "Handler for .click() called." );
+    });
+
+    $( "#sayBtn" ).click(function() {
+        var word = dic[row_counter][1]
+
+        if('speechSynthesis' in window){
+            var speech = new SpeechSynthesisUtterance(word);
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+        }
+    });
+
+    $( "#checkBtn" ).click(function() {
+        alert( "Handler for .click() called." );
+    });
+
+    $( "#nextBtn" ).click(function() {
+        alert( "Handler for .click() called." );
+    });
+
 
 });
