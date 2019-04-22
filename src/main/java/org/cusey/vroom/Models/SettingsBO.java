@@ -207,7 +207,14 @@ public class SettingsBO {
 
     private String getLine(Dictionary entry){
 
-        return DELIMITER + entry.getWord() + DELIMITER + entry.getPartOfSpeech() + DELIMITER + entry.getDefinition() + DELIMITER + entry.getWordUsage() + DELIMITER  ;
+        return DELIMITER + entry.getWord()
+                + DELIMITER + entry.getPartOfSpeech()
+                + DELIMITER + entry.getDefinition()
+                + DELIMITER + entry.getWordUsage()
+                + DELIMITER + entry.getTotalTryCount()
+                + DELIMITER + entry.getRightCount()
+                + DELIMITER;
+
     }
 
     private String getFirstLetterWord(Dictionary entry){
