@@ -1,18 +1,18 @@
 /* TEMPLATE HEADER */
 #logo-header{
-    display: inline;
+	display: inline;
 }
 
 #logo-image{
-    width: 220px;
-    height: 105px;
+	width: 220px;
+	height: 105px;
 	margin-left: 40px;
 }
 
 #logo-name{
 	width: 470px;
 	height: 100px;
-    float: right;
+	float: right;
 	margin-right: 40px;
 }
 
@@ -39,4 +39,26 @@
 .footer-strip{
 	height: 5px;
 	width: 100%;
+}
+
+/* FORM LAYOUT */
+
+.page-title{
+	color: #007bff;
+}
+.Box {
+	background-color: #fff;
+	border: 1px solid #d1d5da;
+	border-radius: 3px;
+}
+
+.py-0 {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+.Box-row {
+	padding: 16px;
+	margin-top: -1px;
+	list-style-type: none;
+	border-top: 1px solid #e1e4e8;
 }

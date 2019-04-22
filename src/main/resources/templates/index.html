@@ -20,76 +20,78 @@
 <div th:replace="template :: header"></div>
 <div th:replace="template :: navigation"></div>
 
+<div class="container">
+    <h1 class="page-title" >Test</h1>
+    <hr>
+    <br>
 
-<div class="card text-center m-3">
-    <div class="card-header bg-success">
+    <div id="select-test" >
+
+        <h4>Select Spelling Test</h4>
+        <div class="Box">
+
+            <li class="Box-row py-0">
+                <label for="first-letter"><b>First Letters of the Word</b></label>
+                <input type="text" id="first-letter" class="form-control" ></input>
+            </li>
+
+            <li class="Box-row py-0">
+                <div class="py-3">
+                    <button id="startBtn" class="btn btn-primary" type="button">Start</button>
+                </div>
+            </li>
+
+        </div>
     </div>
-    <div class="card-body">
-        <h5 class="card-title">Select Spelling Test</h5>
 
-        <div class="container mb-3">
 
-            <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Tests
-                </button>
-
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Link 1</a>
-                    <a class="dropdown-item" href="#">Link 2</a>
-                    <a class="dropdown-item" href="#">Link 3</a>
+    <div id="take-test" >
+        <h4>Take Spelling Test</h4>
+        <div class="Box">
+            <li class="Box-row py-0">
+                <div class="mb-3" >
+                    <textarea  id="inputWordsTxt" cols="150" rows="4"></textarea>
                 </div>
 
-            </div>
+                <div>
+                    <div class="btn-group">
+                        <button id="previousBtn" class="btn btn-primary" type="button">Previous</button>
+                        <button id="sayBtn" class="btn btn-primary " type="button">Say</button>
+                        <button id="checkBtn" class="btn btn-primary" type="button">Check</button>
+                        <button id="nextBtn" class="btn btn-primary" type="button">Next</button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="Box-row py-0">
+                <div class="py-3" >
+                    <button id="doneBtn" class="btn btn-primary" type="button">Done</button>
+                </div>
+            </li>
 
         </div>
 
-        <div class="container ">
 
-            <div class="btn-group">
-                <button id="startBtn" class="btn btn-primary" type="button">Start</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="card text-center m-3">
-    <div class="card-header bg-success">
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Take Spelling Test</h5>
-
-
-        <div class="container mb-3">
-            <textarea  id="inputWordsTxt" cols="150" rows="4"></textarea>
-        </div>
-
-        <div class="container">
-            <div class="btn-group">
-                <button id="previousBtn" class="btn btn-primary" type="button">Previous</button>
-                <button id="sayBtn" class="btn btn-primary " type="button">Say</button>
-                <button id="checkBtn" class="btn btn-primary" type="button">Check</button>
-                <button id="nextBtn" class="btn btn-primary" type="button">Next</button>
-            </div>
-        </div>
     </div>
 
 </div>
-
-
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 <div th:replace="template :: footer"></div>
 
-<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}" /></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}" ></script>
 <script type="text/javascript" th:src="@{/js/popper.js}" ></script>
-<script type="text/javascript" th:src="@{/js/bootstrap.min.js}" /></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}" ></script>
 
+<script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}" ></script>
 <script type="text/javascript" th:src="@{/js/index.js}" ></script>
+
+
 
 </body>
 

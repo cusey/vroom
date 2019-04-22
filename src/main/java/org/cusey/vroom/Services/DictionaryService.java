@@ -36,4 +36,9 @@ public class DictionaryService {
         dictionaryRepository.deleteById(id);
     }
 
+    public void deleteAll(){
+        dictionaryRepository.deleteAll();
+    }
+
+
 }
