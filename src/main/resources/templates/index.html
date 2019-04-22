@@ -78,6 +78,8 @@
          <span id="show-definition" style="font-size: 30px; color: black;"></span>
          <p class="show-header" style="margin-top: 30px;">Word Usage:</p>
          <span id="show-word-usage" style="font-size: 30px; color: black;"></span>
+        <p class="show-header" style="margin-top: 30px;">Right/Total:</p>
+        <span id="show-right-total-count" style="font-size: 30px; color: black;"></span>
     </div>
 
 </div>
@@ -94,8 +96,8 @@
             <td th:text="${dic.partOfSpeech}">Part Of Speech</td>
             <td th:text="${dic.definition}">Description</td>
             <td th:text="${dic.wordUsage}">Word Usage</td>
-            <td th:text="${dic.totalTryCount}">Word Usage</td>
-            <td th:text="${dic.rightCount}">Word Usage</td>
+            <td th:text="${dic.totalTryCount}">Total Try Count</td>
+            <td th:text="${dic.rightCount}">Right Count</td>
         </tr>
 
         </tbody>

@@ -3,6 +3,8 @@ $(document).ready(function() {
     var dic = [];
     var row_counter = 0;
 
+    var show_displace = false;
+
     var table = document.getElementById('dictionary-entries');
 
     var rowLength = table.rows.length;
@@ -13,6 +15,10 @@ $(document).ready(function() {
 
         for(var y = 0; y < 7; y++){
             dic[x][y] = row.cells[y].innerText;
+
+            if( y==5 || y==6){
+                dic[x][y] = parseInt( dic[x][y] );
+            }
         }
 
     }
@@ -34,6 +40,7 @@ $(document).ready(function() {
 
         $('#show-block').hide();
         $('.check-answer').hide();
+        show_displace = false;
 
         if(row_counter == 0){
             row_counter = rowLength -1;
@@ -55,12 +62,21 @@ $(document).ready(function() {
     $( "#checkBtn" ).click(function() {
         var user_answer = $('#answer').val();
 
+        user_answer = user_answer.replace(/\s/g, '');
+
+        dic[row_counter][5] = dic[row_counter][5] +1;
+
         if( user_answer == dic[row_counter][1] ){
             $('#correct').show();
             $('#incorrect').hide();
+            dic[row_counter][6] = dic[row_counter][6] +1
         }else{
             $('#incorrect').show();
             $('#correct').hide();
+        }
+
+        if(show_displace){
+            $( "#showBtn" ).click();
         }
 
     });
@@ -69,12 +85,15 @@ $(document).ready(function() {
     $( "#showBtn" ).click(function() {
         changeProgressStatus(row_counter,rowLength-1);
 
+        show_displace = true;
+
         $('#show-block').show();
         $('.show-header').show();
         $('#show-word').text( dic[row_counter][1] );
         $('#show-part-speech').text( dic[row_counter][2] );
         $('#show-definition').text( dic[row_counter][3] );
         $('#show-word-usage').text( dic[row_counter][4] );
+        $('#show-right-total-count').text( dic[row_counter][6] +'/'+dic[row_counter][5]);
 
     });
 
@@ -82,6 +101,7 @@ $(document).ready(function() {
 
         $('#show-block').hide();
         $('.check-answer').hide();
+        show_displace = false;
 
         if(row_counter == rowLength -1){
             row_counter = 0;
