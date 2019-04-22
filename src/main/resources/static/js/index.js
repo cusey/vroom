@@ -27,7 +27,12 @@ $(document).ready(function() {
         $('#diplayWordTotal').text("( " + progressCount +" / " + (rowLength -1) + " )");
     };
 
+    $('#show-block').hide();
+
     $( "#previousBtn" ).click(function() {
+
+        $('#show-block').hide();
+
         if(row_counter == 0){
             row_counter = rowLength -1;
         }else{
@@ -51,10 +56,20 @@ $(document).ready(function() {
 
 
     $( "#showBtn" ).click(function() {
-        changeProgressStatus(row_counter,rowLength-1)
+        changeProgressStatus(row_counter,rowLength-1);
+
+        $('#show-block').show();
+        $('.show-header').show();
+        $('#show-word').text( dic[row_counter][1] );
+        $('#show-part-speech').text( dic[row_counter][2] );
+        $('#show-definition').text( dic[row_counter][3] );
+        $('#show-word-usage').text( dic[row_counter][4] );
+
     });
 
     $( "#nextBtn" ).click(function() {
+
+        $('#show-block').hide();
 
         if(row_counter == rowLength -1){
             row_counter = 0;
