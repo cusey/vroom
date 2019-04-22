@@ -110,5 +110,13 @@ $(document).ready(function() {
         }
     });
 
+    $( "#donetBtn" ).click(function() {
+
+        alert( "Done Button was click" );
+    });
+
+
+
+
 
 });
