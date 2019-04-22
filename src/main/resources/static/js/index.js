@@ -18,7 +18,11 @@ $(document).ready(function() {
     }
 
     $( "#previousBtn" ).click(function() {
-        alert( "Handler for .click() called." );
+        if(row_counter == 0){
+            row_counter = rowLength -1;
+        }else{
+            row_counter = row_counter -1;
+        }
     });
 
     $( "#sayBtn" ).click(function() {
@@ -36,7 +40,12 @@ $(document).ready(function() {
     });
 
     $( "#nextBtn" ).click(function() {
-        alert( "Handler for .click() called." );
+
+        if(row_counter == rowLength -1){
+            row_counter = 0;
+        }else{
+            row_counter = row_counter +1;
+        }
     });
 
 
