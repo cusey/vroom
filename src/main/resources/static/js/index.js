@@ -36,6 +36,9 @@ $(document).ready(function() {
     $('#show-block').hide();
     $('.check-answer').hide();
 
+    $('#done').hide();
+
+
     $( "#previousBtn" ).click(function() {
 
         $('#show-block').hide();
@@ -112,6 +115,9 @@ $(document).ready(function() {
 
     $( "#donetBtn" ).click(function() {
 
+        $('#show-block').hide();
+        $('.check-answer').hide();
+
         for(var i=0; i<rowLength; i+=1) {
 
             var dataDatabase = {};
@@ -136,10 +142,10 @@ $(document).ready(function() {
                 }
             });
         }
+
+        $('#done').show();
+
+        $("#done span").html('<strong>Correct</strong> Number row change in database is ' + (rowLength -1));
     });
-
-
-
-
 
 });
