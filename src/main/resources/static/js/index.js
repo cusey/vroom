@@ -112,7 +112,30 @@ $(document).ready(function() {
 
     $( "#donetBtn" ).click(function() {
 
-        alert( "Done Button was click" );
+        for(var i=0; i<rowLength; i+=1) {
+
+            var dataDatabase = {};
+
+            dataDatabase["id"] = dic[i][0];
+            dataDatabase["word"] = dic[i][1];
+            dataDatabase["partOfSpeech"] = dic[i][2];
+            dataDatabase["definition"] = dic[i][3];
+            dataDatabase["wordUsage"] = dic[i][4];
+            dataDatabase["totalTryCount"] = dic[i][5];
+            dataDatabase["rightCount"] = dic[i][6];
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/save",
+                data: JSON.stringify(dataDatabase),
+                dataType: 'json',
+                timeout: 600000,
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+        }
     });
 
 
