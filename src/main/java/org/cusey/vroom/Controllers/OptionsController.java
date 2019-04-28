@@ -67,7 +67,7 @@ public class OptionsController {
             dictionaryService.save(element);
         }
         
-        settings.setSuccessMessage(("Total Number of entries uploaded are " +  dicList.size() ));
+        settings.setSuccessMessage(("Total Number of entries uploaded are " + dicList.size()));
 
         return "options";
 
@@ -85,12 +85,9 @@ public class OptionsController {
         List<Dictionary> dicList = dictionaryService.findAll();
         
         int rowCount =  settings.populateFlatFile(dicList);
-        
-        if(rowCount > 0){
-        	settings.setSuccessMessage(("Total Number of entries printed are " + rowCount + " rows."));
-        }else{
-        	settings.setDangerMessage(("Total Number of entries printed are " + rowCount + " rows."));
-        }
+
+        settings.setSuccessMessage(("Total Number of entries printed are " + rowCount + " rows."));
+
 
         return "options";
 

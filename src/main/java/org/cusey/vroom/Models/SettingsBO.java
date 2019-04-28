@@ -43,6 +43,7 @@ public class SettingsBO {
     private String folderIn;
     @Value("Output")
     private String folderOut;
+    private String filterOut = "0";
 
     private File[] files;
 
@@ -163,7 +164,14 @@ public class SettingsBO {
 
                     slf4jLogger.debug( "[" + index + " ] " + getLine(entry) );
 
-                    writeLine(entry);
+                    int correctPercentage = Integer.parseInt(filterOut);
+                    double entityCorrectPercentage = ((double) entry.getRightCount()/entry.getTotalTryCount())*100;
+                    if(correctPercentage <= entityCorrectPercentage){
+                        totalRowCount++;
+                        writeLine(entry);
+                    }
+
+
 
                     boolean newLine = false;
 
@@ -185,7 +193,7 @@ public class SettingsBO {
 
                     }
 
-                    totalRowCount++;
+
 
                 }
                 close();
@@ -275,5 +283,8 @@ public class SettingsBO {
 
     public File[] getFiles() {return files;}
     public void setFiles(File[] files) {this.files = files;}
+
+    public String getFilterOut() { return filterOut; }
+    public void setFilterOut(String filterOut) { this.filterOut = filterOut; }
 
 }
