@@ -1,10 +1,7 @@
 package org.cusey.vroom.Models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Comparator;
 
 @Entity(name="t_dictionary")
@@ -15,7 +12,9 @@ public class Dictionary {
     private int id ;
     private String word;
     private String partOfSpeech ;
+    @Column(length=10000)
     private String definition;
+    @Column(length=10000)
     private String wordUsage ;
     private int totalTryCount;
     private int rightCount;
