@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     var dic = [];
     var row_counter = 0;
+    var right_counter = 0;
+    var wrong_counter = 0;
 
     var show_displace = false;
 
@@ -33,6 +35,12 @@ $(document).ready(function() {
         $('#diplayWordTotal').text("( " + progressCount +" / " + (rowLength -1) + " )");
     };
 
+    var changeProgressTotals = function(){
+
+        $('#diplayWrongTotal').text( "WRONG: " + wrong_counter );
+        $('#diplayRightTotal').text( "RIGHT: " + right_counter );
+    };
+
     $('#show-block').hide();
     $('.check-answer').hide();
 
@@ -40,6 +48,10 @@ $(document).ready(function() {
 
 
     $( "#previousBtn" ).click(function() {
+        changeProgressStatus(row_counter,rowLength-1);
+        changeProgressTotals();
+
+        $('#answer').val("");
 
         $('#show-block').hide();
         $('.check-answer').hide();
@@ -53,6 +65,9 @@ $(document).ready(function() {
     });
 
     $( "#sayBtn" ).click(function() {
+        changeProgressStatus(row_counter,rowLength-1);
+        changeProgressTotals();
+
         var word = dic[row_counter][1]
 
         if('speechSynthesis' in window){
@@ -63,6 +78,9 @@ $(document).ready(function() {
     });
 
     $( "#checkBtn" ).click(function() {
+        changeProgressStatus(row_counter,rowLength-1);
+        changeProgressTotals();
+
         var user_answer = $('#answer').val();
 
         //Replace spaces
@@ -77,10 +95,14 @@ $(document).ready(function() {
             $('#incorrect').hide();
 
             //Increase Right Count
-            dic[row_counter][6] = dic[row_counter][6] +1
+            dic[row_counter][6] = dic[row_counter][6] +1;
+
+            right_counter = right_counter +1;
         }else{
             $('#incorrect').show();
             $('#correct').hide();
+
+            wrong_counter = wrong_counter +1;
         }
 
         if(show_displace){
@@ -92,6 +114,7 @@ $(document).ready(function() {
 
     $( "#showBtn" ).click(function() {
         changeProgressStatus(row_counter,rowLength-1);
+        changeProgressTotals();
 
         show_displace = true;
 
@@ -106,6 +129,10 @@ $(document).ready(function() {
     });
 
     $( "#nextBtn" ).click(function() {
+        changeProgressStatus(row_counter,rowLength-1);
+        changeProgressTotals();
+
+        $('#answer').val("");
 
         $('#show-block').hide();
         $('.check-answer').hide();
