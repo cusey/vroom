@@ -65,13 +65,18 @@ $(document).ready(function() {
     $( "#checkBtn" ).click(function() {
         var user_answer = $('#answer').val();
 
+        //Replace spaces
         user_answer = user_answer.replace(/\s/g, '');
+        dic[row_counter][1] = dic[row_counter][1].replace(/\s/g, '');
 
+        //Increase Total Count
         dic[row_counter][5] = dic[row_counter][5] +1;
 
-        if( user_answer == dic[row_counter][1] ){
+        if( user_answer.toLowerCase() == dic[row_counter][1].toLowerCase() ){
             $('#correct').show();
             $('#incorrect').hide();
+
+            //Increase Right Count
             dic[row_counter][6] = dic[row_counter][6] +1
         }else{
             $('#incorrect').show();
