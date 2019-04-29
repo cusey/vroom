@@ -166,12 +166,11 @@ public class SettingsBO {
 
                     int correctPercentage = Integer.parseInt(filterOut);
                     double entityCorrectPercentage = ((double) entry.getRightCount()/entry.getTotalTryCount())*100;
-                    if(correctPercentage <= entityCorrectPercentage){
+                    if(correctPercentage >= entityCorrectPercentage){
                         totalRowCount++;
                         writeLine(entry);
+                        slf4jLogger.debug(entry.toString());
                     }
-
-
 
                     boolean newLine = false;
 
@@ -180,8 +179,8 @@ public class SettingsBO {
                         newLine = !(getFirstLetterWord(entry).equalsIgnoreCase(getFirstLetterWord(entryNext)));
                     }
 
-                    slf4jLogger.debug("Close file writer and create new file? " + (newLine == true ? "Yes" : "No" )  );
-                    slf4jLogger.debug("Entry Word: " + entry.getWord() +" New Entry Word: " + entryNext.getWord() );
+                    //slf4jLogger.debug("Close file writer and create new file? " + (newLine == true ? "Yes" : "No" )  );
+                    //slf4jLogger.debug("Entry Word: " + entry.getWord() +" New Entry Word: " + entryNext.getWord() );
 
                     if(newLine){
                         close();
