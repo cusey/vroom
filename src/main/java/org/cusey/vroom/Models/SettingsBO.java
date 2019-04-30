@@ -164,13 +164,28 @@ public class SettingsBO {
 
                     slf4jLogger.debug( "[" + index + " ] " + getLine(entry) );
 
-                    int correctPercentage = Integer.parseInt(filterOut);
-                    double entityCorrectPercentage = ((double) entry.getRightCount()/entry.getTotalTryCount())*100;
-                    if(correctPercentage >= entityCorrectPercentage){
+                    if(filterOut.matches("\\d+") ){
+
+                        int correctPercentage = Integer.parseInt(filterOut);
+                        if( 0 <= correctPercentage && correctPercentage <= 100){
+
+                            double entityCorrectPercentage = ((double) entry.getRightCount()/entry.getTotalTryCount())*100;
+                            if(correctPercentage >= entityCorrectPercentage){
+                                totalRowCount++;
+                                writeLine(entry);
+                                slf4jLogger.debug(entry.toString());
+                            }
+                        }else{
+                            this.dangerMessage = "The perecent must between 0 and 100.";
+                            index = dic.size();
+                        }
+
+                    }else{
                         totalRowCount++;
                         writeLine(entry);
                         slf4jLogger.debug(entry.toString());
                     }
+
 
                     boolean newLine = false;
 
