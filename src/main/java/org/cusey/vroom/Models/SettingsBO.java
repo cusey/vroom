@@ -147,6 +147,7 @@ public class SettingsBO {
 
         int totalRowCount = 0;
         String fileName = "";
+        int correctPercentage = Integer.parseInt(this.filterOut);
 
         if ( (dic.size() > 0) ){
                 for( int index = 0; index < dic.size(); index++){
@@ -166,7 +167,7 @@ public class SettingsBO {
 
                     if(filterOut.matches("\\d+") ){
 
-                        int correctPercentage = Integer.parseInt(filterOut);
+
                         if( 0 <= correctPercentage && correctPercentage <= 100){
 
                             double entityCorrectPercentage = ((double) entry.getRightCount()/entry.getTotalTryCount())*100;
