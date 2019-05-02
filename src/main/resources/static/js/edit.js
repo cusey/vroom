@@ -1,5 +1,13 @@
 $( document ).ready(function() {
 
+    var isNumber = function (n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+    $('#error-message').hide();
+    $("#message-one").html("<b></b>");
+    $("#message-two").html("<b></b>");
+    $("#message-three").html("<b></b>");
+
     var dicTable = $('#dictionary-entries').DataTable( {
         "pagingType": "full_numbers"
     } );
@@ -45,6 +53,8 @@ $( document ).ready(function() {
         $("#pos").val("");
         $("#desc").val("");
         $("#word-usage").val("");
+        $("#right-count").val("");
+        $("#total-try-count").val("");
 
         dataDatabase = {};
 
@@ -58,6 +68,8 @@ $( document ).ready(function() {
         $("#pos").val(dataPage[2]);
         $("#desc").val(dataPage[3]);
         $("#word-usage").val(dataPage[4]);
+        $("#right-count").val(dataPage[5]);
+        $("#total-try-count").val(dataPage[6]);
 
     });
 
@@ -80,43 +92,73 @@ $( document ).ready(function() {
 
         console.log("ACTION: " + action);
 
-        dataDatabase["word"] = $("#word").val();
-        dataDatabase["partOfSpeech"] = $("#pos").val();
-        dataDatabase["definition"] = $("#desc").val();
-        dataDatabase["wordUsage"] = $("#word-usage").val();
+        var right = $("#right-count").val();
+        var total = $("#total-try-count").val();
+
+        $('#error-message').hide();
+        $("#message-one").html("<b></b>");
+        $("#message-two").html("<b></b>");
+        $("#message-three").html("<b></b>");
 
 
-        if(action === "edit"){
-            dicTable.row('.selected').remove().draw( false );
-            dataDatabase["id"] = dataPage[0];
-        }
+        if(isNumber(right) && isNumber(total) && ( parseFloat(total) !== 0) ) {
 
-        console.log("DATA being saved in the database: " + Object.values(dataDatabase) );
+            dataDatabase["word"] = $("#word").val();
+            dataDatabase["partOfSpeech"] = $("#pos").val();
+            dataDatabase["definition"] = $("#desc").val();
+            dataDatabase["wordUsage"] = $("#word-usage").val();
+            dataDatabase["rightCount"] = $("#right-count").val();
+            dataDatabase["totalTryCount"] = $("#total-try-count").val();
 
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: "/save",
-            data: JSON.stringify(dataDatabase),
-            dataType: 'json',
-            timeout: 600000,
-            success: function(result){
-                console.log(result);
-                id = result;
 
-                dicTable.row.add( [
-                    id,
-                    dataDatabase["word"],
-                    dataDatabase["partOfSpeech"],
-                    dataDatabase["definition"],
-                    dataDatabase["wordUsage"]
-                ] ).draw( false );
-
-                startButtonsPosition(true);
-
-                $("#close").click();
+            if (action === "edit") {
+                dicTable.row('.selected').remove().draw(false);
+                dataDatabase["id"] = dataPage[0];
             }
-        });
+
+            console.log("DATA being saved in the database: " + Object.values(dataDatabase));
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/save",
+                data: JSON.stringify(dataDatabase),
+                dataType: 'json',
+                timeout: 600000,
+                success: function (result) {
+                    console.log(result);
+                    id = result;
+
+                    dicTable.row.add([
+                        id,
+                        dataDatabase["word"],
+                        dataDatabase["partOfSpeech"],
+                        dataDatabase["definition"],
+                        dataDatabase["wordUsage"],
+                        dataDatabase["rightCount"],
+                        dataDatabase["totalTryCount"]
+                    ]).draw(false);
+
+                    startButtonsPosition(true);
+
+                    $("#close").click();
+                }
+            });
+        }else{
+            $('#error-message').show();
+
+            if(!isNumber(right)){
+                $("#message-one").html("<b>Right Answers must be number.</b>");
+            }
+
+            if(!isNumber(total)){
+                $("#message-two").html("<b>Total Tries must be number.</b>");
+            }
+
+            if( parseFloat(total) === 0){
+                $("#message-three").html("<b>Total Tries can not be zero.</b>");
+            }
+        }
 
 
 
